@@ -1,4 +1,4 @@
-const ENDPOINT = "http://localhost:3000/bfhl";
+const ENDPOINT = "https://bajaj-exam-hp52.onrender.com/bfhl";
 const edgeInput = document.querySelector("#input");
 const responseDisplay = document.querySelector("#output");
 const alertContainer = document.querySelector("#error");
@@ -8,7 +8,7 @@ triggerBtn.addEventListener("click", async () => {
   responseDisplay.textContent = "";
   const rawText = edgeInput.value.trim();
   if (!rawText) {
-    alertContainer.textContent = "Input cannot be empty. Please provide edge data.";
+    alertContainer.textContent = "pls enter your input, input cannot be empty.";
     return;
   }
   const payload = rawText

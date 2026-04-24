@@ -7,7 +7,7 @@
 
 ##  What the API Does
 
-The API processes a list of desired edges like:
+The API processes a list of directed edges like:
 
 ```
 A->B, A->C, B->D
