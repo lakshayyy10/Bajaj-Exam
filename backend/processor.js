@@ -1,6 +1,4 @@
-
 const EDGE_SHAPE = /^([A-Z])->([A-Z])$/;
-
 function analyseEdges(rawList) {
   const invalid = [];
   const dupes = [];
@@ -9,43 +7,33 @@ function analyseEdges(rawList) {
   const parentOf = new Map();   // child -> parent  (first one wins)
   const kidsOf = new Map();     // parent -> array of kids in insertion order
   const pool = new Set();       // every node we've seen in a valid edge
-
   // trim ,validate
   for (let i = 0; i < rawList.length; i++) {
     const raw = rawList[i];
     if (typeof raw !== "string") { invalid.push(String(raw)); continue; }
-
     const token = raw.trim();
     if (!token) { invalid.push(raw); continue; }
-
     const hit = token.match(EDGE_SHAPE);
     if (!hit) { invalid.push(raw); continue; }
-
     const from = hit[1], to = hit[2];
     if (from === to) { invalid.push(raw); continue; }   // self-loop -> invalid
-
     const key = from + "->" + to;
-
     if (accepted.has(key)) {
       if (!dupeFlag.has(key)) { dupes.push(key); dupeFlag.add(key); }
       continue;
     }
     accepted.add(key);
-
     // dimond / multiparent
     if (parentOf.has(to)) continue;
-
     parentOf.set(to, from);
     if (!kidsOf.has(from)) kidsOf.set(from, []);
     kidsOf.get(from).push(to);
     pool.add(from);
     pool.add(to);
   }
-
   // grp into small
   const uf = new Map();
   for (const n of pool) uf.set(n, n);
-
   function findRep(x) {
     let cur = x;
     while (uf.get(cur) !== cur) cur = uf.get(cur);
@@ -62,14 +50,12 @@ function analyseEdges(rawList) {
     if (ra !== rb) uf.set(ra, rb);
   }
   for (const [child, parent] of parentOf) join(child, parent);
-
   const buckets = new Map();
   for (const n of pool) {
     const r = findRep(n);
     if (!buckets.has(r)) buckets.set(r, []);
     buckets.get(r).push(n);
   }
-
   // hierarchies entry buckets
   const hierarchies = [];
   for (const group of buckets.values()) {
@@ -77,7 +63,6 @@ function analyseEdges(rawList) {
     for (const n of group) {
       if (!parentOf.has(n)) { realRoot = n; break; }
     }
-
     if (realRoot === null) {
       const sorted = [...group].sort();
       hierarchies.push({ root: sorted[0], tree: {}, has_cycle: true });
@@ -110,7 +95,6 @@ function analyseEdges(rawList) {
       built.set(n, { [n]: inner });
       depthAt.set(n, tallestKid + 1);
     }
-
     hierarchies.push({
       root: realRoot,
       tree: built.get(realRoot),

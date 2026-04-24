@@ -7,7 +7,15 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- TODO -->
+  <div class="container">
+    <h1>BFHL Hierarchy Explorer</h1>
+    <p class="subtitle">Enter edges like <b>A-&gt;B, A-&gt;C, B-&gt;D</b></p>
+    <textarea id="input" placeholder="Example: A->B, A->C, B->D"></textarea>
+    <button id="submitBtn">Analyze</button>
+    <div id="error" class="error"></div>
+    <h3>Response</h3>
+    <pre id="output"></pre>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>
