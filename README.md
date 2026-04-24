@@ -1,30 +1,138 @@
-# BFHL Hierarchy API
+# BFHL Hierarchy Explorer 
+##  Live Demo
+*  Frontend: https://69eb700cf89e18f518bb3995--remarkable-longma-ed3d95.netlify.app/
+*  Backend API: https://bajaj-exam-hp52.onrender.com/bfhl
 
-Round 1 submission for the SRM Full Stack Engineering Challenge.
+---
 
-A small Node/Express service that takes a list of parent→child edges
-(like `"A->B"`) and returns the trees, any cycles, and a quick summary.
-Ships with a plain HTML/CSS/JS frontend to poke at the API.
+##  What the API Does
 
-## Layout
+The API processes a list of desired edges like:
 
 ```
-backend/    Express API, POST /bfhl
-frontend/   Static single-page UI
+A->B, A->C, B->D
 ```
 
-## Running locally
+and returns:
 
-```bash
+*  Valid hierarchies (tree structures)
+*  Cycle detection
+*  Invalid inputs
+*  Duplicate edges
+*  Summary (tree count, cycles, largest tree)
+
+---
+
+##  Tech Stack
+
+* **Backend:** Node.js + Express
+* **Frontend:** HTML, CSS, Vanilla JavaScript
+* **Deployment:**
+
+  * Backend → Render
+  * Frontend → Netlify
+
+---
+
+##  Project Structure
+
+```
+bajaj/
+├── backend/
+│   ├── server.js
+│   └── processor.js
+├── frontend/
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+└── README.md
+```
+
+---
+
+##  Running Locally
+
+### 1. Start Backend
+
+```
 cd backend
 npm install
 npm start
 ```
 
-The API boots on `http://localhost:3000`. Open `frontend/index.html`
-directly in the browser, or serve the folder with any static server.
+Server runs at:
 
-## Deployment
+```
+http://localhost:3000
+```
 
-Backend is hosted on Render, frontend on Netlify.
-Live URLs will be added once deployed.
+---
+
+### 2. Run Frontend
+
+Open:
+
+```
+frontend/index.html
+```
+
+Or serve it:
+
+```
+npx serve frontend
+```
+
+---
+##  API Endpoint
+
+### POST `/bfhl`
+
+#### Request Body
+
+```json
+{
+  "data": ["A->B", "A->C", "B->D"]
+}
+```
+
+#### Response Includes
+
+* `hierarchies`
+* `invalid_entries`
+* `duplicate_edges`
+* `summary`
+
+---
+
+##  Example
+
+Input:
+
+```
+A->B, A->C, B->D
+```
+
+Output:
+
+* Root: A
+* Depth: 3
+* Tree: A → B → D, A → C
+
+---
+
+##  Important Notes
+
+* Only uppercase single-letter nodes are valid
+* Self-loops are treated as invalid
+* Duplicate edges are tracked but not reused
+
+---
+
+##  Submitted by
+
+Lakshay
+RA2311003010229
+SRM Institute of Science and Technology
+
+---
+
